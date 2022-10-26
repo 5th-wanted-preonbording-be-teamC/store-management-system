@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 CUSTOM_APPS = [
+    "common.apps.CommonConfig",
     "products.apps.ProductConfig",
 ]
 

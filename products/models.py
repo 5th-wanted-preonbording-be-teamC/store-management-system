@@ -1,7 +1,8 @@
 from django.db import models
+from common.models import CommonModel
 
 
-class Photo(models.Model):
+class Photo(CommonModel):
     file = models.ImageField(verbose_name="상품 상세 사진")
     product = models.ForeignKey(
         "Product",
@@ -11,7 +12,7 @@ class Photo(models.Model):
     )
 
 
-class Product(models.Model):
+class Product(CommonModel):
     class ProductDeliveryMethodChoices(models.TextChoices):
         PARCEL = ("parcel", "택배")
 
