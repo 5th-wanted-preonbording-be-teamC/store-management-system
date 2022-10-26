@@ -30,6 +30,10 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+THIRD_PARTY_APPS = [
+    "rest_framework",
+]
+
 CUSTOM_APPS = [
     "common.apps.CommonConfig",
     "products.apps.ProductsConfig",
@@ -45,7 +49,7 @@ SYSTEM_APPS = [
     "django.contrib.staticfiles",
 ]
 
-INSTALLED_APPS = CUSTOM_APPS + SYSTEM_APPS
+INSTALLED_APPS = CUSTOM_APPS + THIRD_PARTY_APPS + SYSTEM_APPS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -130,3 +134,7 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+MEDIA_ROOT = "uploads"
+
+MEDIA_URL = "uploads/"
