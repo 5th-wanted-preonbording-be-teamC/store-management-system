@@ -32,7 +32,7 @@ ALLOWED_HOSTS = []
 
 CUSTOM_APPS = [
     "common.apps.CommonConfig",
-    "products.apps.ProductConfig",
+    "products.apps.ProductsConfig",
 ]
 
 SYSTEM_APPS = [
