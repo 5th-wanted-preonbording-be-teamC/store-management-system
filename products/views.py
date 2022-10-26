@@ -43,7 +43,9 @@ class ProductDetail(APIView):
             raise NotFound
 
     def get(self, request, pk):
-        pass
+        product = self.get_object(pk)
+        serializer = ProductDetailSerializer(product)
+        return Response(serializer.data)
 
     def patch(self, request, pk):
         pass
