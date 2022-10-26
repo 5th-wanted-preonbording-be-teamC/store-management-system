@@ -38,6 +38,9 @@ class Products(APIView):
 
 
 class ProductDetail(APIView):
+
+    permission_classes = [IsAdminOrReadOnly]
+
     def get_object(self, pk):
         try:
             return Product.objects.get(pk=pk)
@@ -55,7 +58,19 @@ class ProductDetail(APIView):
         return Response(serializer.data)
 
     def patch(self, request, pk):
-        pass
+        """
+        상품 수정
+        PATCH /api/v1/products/{pk}/
+        """
+
+        product = self.get_object(pk)
+        serializer = ProductDetailSerializer(product, data=request.data, partial=True)
+        if serializer.is_valid():
+            product = serializer.save()
+            serializer = ProductDetailSerializer(product)
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk):
         """
