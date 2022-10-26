@@ -1,11 +1,20 @@
 from rest_framework.views import APIView
 from rest_framework.exceptions import NotFound
+from rest_framework.response import Response
 from .models import Product
+from .serializers import ProductListSerializer
 
 
 class Products(APIView):
     def get(self, request):
-        pass
+        """
+        상품 목록
+        GET /api/v1/products/
+        """
+        products = Product.objects.all()
+        serializer = ProductListSerializer(products, many=True)
+
+        return Response(serializer.data)
 
     def post(self, request):
         pass
