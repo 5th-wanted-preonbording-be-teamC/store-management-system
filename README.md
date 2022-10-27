@@ -67,6 +67,17 @@ PRODUCT{
     updated_at datetime
 }
 USER{
+    id integer
+    user_id string
+    password string
+    user_name string
+    email string
+    address string
+    date_joined datetime
+    last_login datetime
+    is_superuser boolean
+    is_staff boolean
+    is_active boolean
 }
 USER ||--o{ PAYMENT : buy
 PRODUCT ||--o{ PAYMENT : bought
