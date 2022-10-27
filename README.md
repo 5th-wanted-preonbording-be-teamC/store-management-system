@@ -103,33 +103,33 @@ PRODUCT ||--o{ PAYMENT : bought
 ### products
 
 - 제품 모델
-  - thumbnail: 썸네일
-  - name: 상품명
-  - description: 상품 설명
-  - price: 가격
-  - pre_sale_price: 세일 전 가격
-  - is_waiting: 판매 대기 여부
-  - is_best: 베스트 상품 여부
-  - is_md: MD 상품 여부
-  - stock: 재고
-  - country: 원산지
-  - delivery_method: 배송방법
-  - delivery_price: 배송비
+  - `thumbnail`: 썸네일
+  - `name`: 상품명
+  - `description`: 상품 설명
+  - `price`: 가격
+  - `pre_sale_price`: 세일 전 가격
+  - `is_waiting`: 판매 대기 여부
+  - `is_best`: 베스트 상품 여부
+  - `is_md`: MD 상품 여부
+  - `stock`: 재고
+  - `country`: 원산지
+  - `delivery_method`: 배송방법
+  - `delivery_price`: 배송비
 
 ### users
 
 - 사용자 모델
-  - id: 프라이머리키로 사용될 아이디
-  - user_id: 로그인 아이디
-  - password: 암호화된 비밀번호
-  - user_name: 사용자 이름
-  - email: email
-  - address: 사용자 주소
-  - date_joined: 회원가입 일
-  - last_login: 마지막 로그인
-  - is_superuser: 모든 권한 활성 여부
-  - is_staff: admin 점속 가능 여부
-  - is_active: 계정 활성 여부
+  - `id`: 프라이머리키로 사용될 아이디
+  - `user_id`: 로그인 아이디
+  - `password`: 암호화된 비밀번호
+  - `user_name`: 사용자 이름
+  - `email`: email
+  - `address`: 사용자 주소
+  - `date_joined`: 회원가입 일
+  - `last_login`: 마지막 로그인
+  - `is_superuser`: 모든 권한 활성 여부
+  - `is_staff`: admin 점속 가능 여부
+  - `is_active`: 계정 활성 여부
 
 ## API Docs
 
