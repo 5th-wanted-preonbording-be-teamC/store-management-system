@@ -1,15 +1,6 @@
 from rest_framework import serializers
 from .models import Payment
 
-__all__ = (
-    'PaymentListSerializer',
-    'PaymentSerializer',
-    'PaymentSuccessSerializer',
-    'PaymentCancelSerializer',
-    'PaymentShipSerializer',
-    'PaymentDeliverySerializer',
-    'PaymentDeliveryAddressSerializer',
-)
 common_fields = (
     "id",
     "product",
@@ -28,6 +19,7 @@ common_fields = (
 ) # 공통 필드
 indivisual_fields = tuple() # 개별 필드
 list_fields = tuple() # 리스트 필드
+
 
 class PaymentSerializer(serializers.ModelSerializer):
     """
