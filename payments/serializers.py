@@ -126,3 +126,17 @@ class PaymentDeliverySerializer(PaymentUpdateCommonSerializer):
         model = Payment
         fields = ("deliveried_at",)
 
+
+class PaymentDeliveryAddressSerializer(serializers.ModelSerializer):
+    """
+    배송지 변경 Serializer
+    """
+    def validate(self, attrs):
+        if attrs.get("shiped_at") is not None:
+            # 배송이 시작된 경우 배송지 변경 불가
+            raise serializers.ValidationError("배송이 시작된 상품은 배송지를 변경할 수 없습니다.")
+        return attrs
+
+    class Meta:
+        model = Payment
+        fields = ("delivery_address",)
