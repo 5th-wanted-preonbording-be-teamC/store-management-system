@@ -1,8 +1,8 @@
 from django.db import transaction
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.status import HTTP_400_BAD_REQUEST
-from rest_framework.exceptions import ParseError
+from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_200_OK
+from rest_framework.exceptions import ParseError, NotFound
 from .models import Order
 from products.models import Product
 from .serializers import OrderSerializer
@@ -38,6 +38,9 @@ class OrdersView(APIView):
         if serializer.is_valid():
             try:
                 with transaction.atomic():
+                    # TODO: 결제 관련 & 결제 검증 로직 추가
+                    # ...
+
                     order = serializer.save(
                         user=request.user,
                         status=Order.OrderStatusChoices.PAYED,
@@ -53,3 +56,33 @@ class OrdersView(APIView):
             except Exception:
                 raise ParseError("not valid product id.")
         return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
+
+
+class OrderView(APIView):
+    def get_object(self, pk):
+        try:
+            return Order.objects.get(pk=pk)
+        except Order.DoesNotExist:
+            raise NotFound
+
+    def patch(self, request, pk):
+        """
+        주문 내역 상태 변경
+        PATCH /api/v1/orders/{id}/
+        """
+
+        order = self.get_object(pk)
+
+        # 주문자가 상품을 배송 받은 경우
+        if order.user == request.user:
+            order.status = Order.OrderStatusChoices.ARRIVED
+            order.save()
+            return Response(status=HTTP_200_OK)
+
+        # 주문자가 상품을 발송한 경우
+        if request.user.is_staff:
+            order.status = Order.OrderStatusChoices.SENT
+            order.save()
+            return Response(status=HTTP_200_OK)
+
+        return Response(status=HTTP_400_BAD_REQUEST)
