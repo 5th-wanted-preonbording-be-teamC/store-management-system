@@ -133,20 +133,100 @@ PRODUCT ||--o{ PAYMENT : bought
 
 ## API Docs
 
-| Method | URL                   | Permission | Description                  |
-| ------ | --------------------- | ---------- | ---------------------------- |
-| GET    | /api/v1/products/     | All        | 상품을 불러옵니다.           |
-| POST   | /api/v1/products/     | Admin      | 상품을 생성합니다.           |
-| GET    | /api/v1/products/{id} | All        | 상품 하나를 불러옵니다.      |
-| PATCH  | /api/v1/products/{id} | Admin      | 상품을 수정합니다.           |
-| DELETE | /api/v1/products/{id} | Admin      | 상품을 삭제합니다.           |
-| POST   | /api/v1/users/        | All        | 유저 회원가입                |
-| GET    | /api/v1/users/        | Admin      | 회원목록을 확인합니다.       |
-| GET    | /api/v1/users/{id}    | All        | 회원정보를 회원합니다.       |
-| PUT    | /api/v1/users/{id}    | Self       | 회원 정보를 수정합니다.      |
-| DELETE | /api/v1/users/{id}    | Self       | 회원 상태를 비활성화 합니다. |
-| GET    | /api/v1/payments/     | All        | 결재 내역을 불러옵니다.      |
-| POST   | /api/v1/payments/     | Admin      | 결재 내역을 생성합니다.      |
-| GET    | /api/v1/payments/{id} | All        | 결재 내역 하나를 불러옵니다. |
-| PATCH  | /api/v1/payments/{id} | Admin      | 결재 내역을 수정합니다.      |
-| DELETE | /api/v1/payments/{id} | Admin      | 결재 내역을 삭제합니다.      |
+<table>
+  <thead>
+    <tr>
+      <th>App</th>
+      <th>Method</th>
+      <th>URL</th>
+      <th>Permission</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan=5>Products</td>
+      <td>GET</td>
+      <td rowspan=2>/api/v1/products/</td>
+      <td>All</td>
+      <td>상품을 불러옵니다.</td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td>Admin</td>
+      <td>상품을 생성합니다.</td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td rowspan=3>/api/v1/products/{id}</td>
+      <td>All</td>
+      <td>상품 하나를 불러옵니다.</td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td>Admin</td>
+      <td>상품을 수정합니다.</td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td>Admin</td>
+      <td>상품을 삭제합니다.</td>
+    </tr>
+    <tr>
+      <td rowspan=5>USERS</td>
+      <td>POST</td>
+      <td rowspan=2>/api/v1/users/</td>
+      <td>All</td>
+      <td>유저 회원가입</td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td>Admin</td>
+      <td>회원목록을 확인합니다.</td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td rowspan=3>/api/v1/users/{id}</td>
+      <td>All</td>
+      <td>회원정보를 회원합니다.</td>
+    </tr>
+    <tr>
+      <td>PUT</td>
+      <td>Self</td>
+      <td>회원 정보를 수정합니다.</td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td>Self</td>
+      <td>회원 상태를 비활성화 합니다</td>
+    </tr>
+    <tr>
+      <td rowspan=5>Payment</td>
+      <td>GET</td>
+      <td rowspan=2>/api/v1/payments/</td>
+      <td>All</td>
+      <td>결재 내역을 불러옵니다.</td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td>Admin</td>
+      <td>결재 내역을 생성합니다.</td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td rowspan=3>/api/v1/payments/{id}</td>
+      <td>All</td>
+      <td>결재 내역 하나를 불러옵니다</td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td>Admin</td>
+      <td>결재 내역을 수정합니다.</td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td>Admin</td>
+      <td>결재 내역을 삭제합니다.</td>
+    </tr>
+  </tbody>
+</table>
