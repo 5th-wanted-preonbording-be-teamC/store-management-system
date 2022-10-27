@@ -21,3 +21,13 @@ class UserRegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['user_id', 'password', 'user_name']
+
+class UserUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['password', 'user_name']
+
+class UserDeleteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['is_active']

@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -27,3 +28,16 @@ class RegisterAPIView(APIView):
         users = User.objects.all()
         serializer = serializers.UserSerializer(users, many=True)
         return Response(serializer.data)
+
+class UserDetailAPIView(APIView):
+    def get_object(self, pk):
+        return get_object_or_404(User, pk=pk)
+
+    def get(self, request, pk):
+        """
+        회원 상세
+        GET /api/v1/users/{pk}
+        """
+        user = self.get_object(pk=pk)
+        serializer = serializers.UserSerializer(user)
+        return Response(serializer.data, status=status.HTTP_200_OK)
