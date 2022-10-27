@@ -12,6 +12,7 @@ Django, djangoreatframework로 구축한 친환경 농가 API 개발
     - [payments](#payments)
     - [products](#products)
     - [users](#users)
+  - [API Docs](#api-docs)
 
 ## :family: 멤버소개
 
@@ -118,3 +119,23 @@ PRODUCT ||--o{ PAYMENT : bought
   - is_superuser: 모든 권한 활성 여부
   - is_staff: admin 점속 가능 여부
   - is_active: 계정 활성 여부
+
+## API Docs
+
+| Method | URL                   | Permission | Description                  |
+| ------ | --------------------- | ---------- | ---------------------------- |
+| GET    | /api/v1/products/     | All        | 상품을 불러옵니다.           |
+| POST   | /api/v1/products/     | Admin      | 상품을 생성합니다.           |
+| GET    | /api/v1/products/{id} | All        | 상품 하나를 불러옵니다.      |
+| PATCH  | /api/v1/products/{id} | Admin      | 상품을 수정합니다.           |
+| DELETE | /api/v1/products/{id} | Admin      | 상품을 삭제합니다.           |
+| POST   | /api/v1/users/        | All        | 유저 회원가입                |
+| GET    | /api/v1/users/        | Admin      | 회원목록을 확인합니다.       |
+| GET    | /api/v1/users/{id}    | All        | 회원정보를 회원합니다.       |
+| PUT    | /api/v1/users/{id}    | Self       | 회원 정보를 수정합니다.      |
+| DELETE | /api/v1/users/{id}    | Self       | 회원 상태를 비활성화 합니다. |
+| GET    | /api/v1/payments/     | All        | 결재 내역을 불러옵니다.      |
+| POST   | /api/v1/payments/     | Admin      | 결재 내역을 생성합니다.      |
+| GET    | /api/v1/payments/{id} | All        | 결재 내역 하나를 불러옵니다. |
+| PATCH  | /api/v1/payments/{id} | Admin      | 결재 내역을 수정합니다.      |
+| DELETE | /api/v1/payments/{id} | Admin      | 결재 내역을 삭제합니다.      |
