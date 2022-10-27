@@ -3,6 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_200_OK
 from rest_framework.exceptions import ParseError, NotFound
+from rest_framework.permissions import IsAuthenticated
 from .models import Order
 from products.models import Product
 from .serializers import OrderSerializer
@@ -59,6 +60,9 @@ class OrdersView(APIView):
 
 
 class OrderView(APIView):
+
+    permission_classes = [IsAuthenticated]
+
     def get_object(self, pk):
         try:
             return Order.objects.get(pk=pk)
