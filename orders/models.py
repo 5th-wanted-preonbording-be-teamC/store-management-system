@@ -28,3 +28,10 @@ class Order(CommonModel):
         null=True,
         verbose_name="주문자",
     )
+    payment = models.ForeignKey(
+        "payments.Payment",
+        on_delete=models.SET_NULL,
+        related_name="orders",
+        null=True,
+        verbose_name="결재",
+    )
