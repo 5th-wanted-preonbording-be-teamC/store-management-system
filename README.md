@@ -1,8 +1,28 @@
-# 🍏 store-management-system
+# :green_apple: store-management-system
 
-Django, djangoreatframework로 구축한 친환경 농가 Store Service
+Django, djangoreatframework로 구축한 친환경 농가 API 개발
 
-# 📔 프로젝트 요구사항
+## 목차
+
+- [:green_apple: store-management-system](#green_apple-store-management-system)
+  - [목차](#목차)
+  - [:family: 멤버소개](#family-멤버소개)
+  - [:notebook_with_decorative_cover: 프로젝트 요구사항](#notebook_with_decorative_cover-프로젝트-요구사항)
+  - [:computer: ER Diagram](#computer-er-diagram)
+    - [payments](#payments)
+    - [products](#products)
+    - [users](#users)
+  - [API Docs](#api-docs)
+
+## :family: 멤버소개
+
+| 이름   | Github                        | Email                 | Blog                        |
+| ------ | ----------------------------- | --------------------- | --------------------------- |
+| 이찬행 | https://github.com/2chanhaeng | 2chanhaeng@gmail.com  | https://chomu.dev/          |
+| 이호진 | https://github.com/HoJin9622  | kiss0104040@gmail.com | https://velog.io/@hojin9622 |
+| 김동현 | https://github.com/xxddongxx  | hyeon2187@gmail.com   | -                           |
+
+## :notebook_with_decorative_cover: 프로젝트 요구사항
 
 - 기존 운영서비스(스토어)의 Backend 개발
 - 기능 구현을 위한 DB 생성 : 회원관리, 상품관리, 결재관리, 주문내역 등
@@ -12,7 +32,7 @@ Django, djangoreatframework로 구축한 친환경 농가 Store Service
 - 유저는 이용자, 관리자로 나누어져 있으며 상품 및 결재, 주문은 관리자만 입력, 수정, 삭제 가능,
   이용자는 회원가입, 결재, 주문을 제외하고 조회 권한만 허용
 
-# 💻 ER Diagram
+## :computer: ER Diagram
 
 ```mermaid
 erDiagram
@@ -47,12 +67,23 @@ PRODUCT{
     updated_at datetime
 }
 USER{
+    id integer
+    user_id string
+    password string
+    user_name string
+    email string
+    address string
+    date_joined datetime
+    last_login datetime
+    is_superuser boolean
+    is_staff boolean
+    is_active boolean
 }
 USER ||--o{ PAYMENT : buy
 PRODUCT ||--o{ PAYMENT : bought
 ```
 
-## payments
+### payments
 
 - 결제 모델
   - `id`: 프라이머리 키로 사용될 아이디
@@ -69,22 +100,133 @@ PRODUCT ||--o{ PAYMENT : bought
   - `canceled_at`: 결제 취소 시간 (null이면 결제 유지 중)
   - `deliveried_at`: 배송 완료 시간 (null이면 배송 미완료)
 
-## products
+### products
 
 - 제품 모델
-  - thumbnail: 썸네일
-  - name: 상품명
-  - description: 상품 설명
-  - price: 가격
-  - pre_sale_price: 세일 전 가격
-  - is_waiting: 판매 대기 여부
-  - is_best: 베스트 상품 여부
-  - is_md: MD 상품 여부
-  - stock: 재고
-  - country: 원산지
-  - delivery_method: 배송방법
-  - delivery_price: 배송비
+  - `thumbnail`: 썸네일
+  - `name`: 상품명
+  - `description`: 상품 설명
+  - `price`: 가격
+  - `pre_sale_price`: 세일 전 가격
+  - `is_waiting`: 판매 대기 여부
+  - `is_best`: 베스트 상품 여부
+  - `is_md`: MD 상품 여부
+  - `stock`: 재고
+  - `country`: 원산지
+  - `delivery_method`: 배송방법
+  - `delivery_price`: 배송비
 
-## users
+### users
 
 - 사용자 모델
+  - `id`: 프라이머리키로 사용될 아이디
+  - `user_id`: 로그인 아이디
+  - `password`: 암호화된 비밀번호
+  - `user_name`: 사용자 이름
+  - `email`: email
+  - `address`: 사용자 주소
+  - `date_joined`: 회원가입 일
+  - `last_login`: 마지막 로그인
+  - `is_superuser`: 모든 권한 활성 여부
+  - `is_staff`: admin 점속 가능 여부
+  - `is_active`: 계정 활성 여부
+
+## API Docs
+
+<table>
+  <thead>
+    <tr>
+      <th>App</th>
+      <th>Method</th>
+      <th>URL</th>
+      <th>Permission</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan=5>Products</td>
+      <td>GET</td>
+      <td rowspan=2>/api/v1/products/</td>
+      <td>All</td>
+      <td>상품을 불러옵니다.</td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td>Admin</td>
+      <td>상품을 생성합니다.</td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td rowspan=3>/api/v1/products/{id}</td>
+      <td>All</td>
+      <td>상품 하나를 불러옵니다.</td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td>Admin</td>
+      <td>상품을 수정합니다.</td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td>Admin</td>
+      <td>상품을 삭제합니다.</td>
+    </tr>
+    <tr>
+      <td rowspan=5>USERS</td>
+      <td>POST</td>
+      <td rowspan=2>/api/v1/users/</td>
+      <td>All</td>
+      <td>유저 회원가입</td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td>Admin</td>
+      <td>회원목록을 확인합니다.</td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td rowspan=3>/api/v1/users/{id}</td>
+      <td>All</td>
+      <td>회원정보를 회원합니다.</td>
+    </tr>
+    <tr>
+      <td>PUT</td>
+      <td>Self</td>
+      <td>회원 정보를 수정합니다.</td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td>Self</td>
+      <td>회원 상태를 비활성화 합니다</td>
+    </tr>
+    <tr>
+      <td rowspan=5>Payment</td>
+      <td>GET</td>
+      <td rowspan=2>/api/v1/payments/</td>
+      <td>All</td>
+      <td>결재 내역을 불러옵니다.</td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td>Admin</td>
+      <td>결재 내역을 생성합니다.</td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td rowspan=3>/api/v1/payments/{id}</td>
+      <td>All</td>
+      <td>결재 내역 하나를 불러옵니다</td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td>Admin</td>
+      <td>결재 내역을 수정합니다.</td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td>Admin</td>
+      <td>결재 내역을 삭제합니다.</td>
+    </tr>
+  </tbody>
+</table>
