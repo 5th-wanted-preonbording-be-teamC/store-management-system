@@ -13,6 +13,7 @@ common_fields = (
     "successed_at",
     "canceled_at",
     "deliveried_at",
+    "shiped_at",
     "created_at",
     "updated_at",
 ) # 공통 필드
@@ -26,7 +27,6 @@ class PaymentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Payment
         fields = common_fields + indivisual_fields
-
 
 
 class PaymentListSerializer(serializers.ModelSerializer):
