@@ -8,7 +8,7 @@ from products.permissions import IsAdminOrReadOnly
 
 
 
-class Payments(APIView):
+class PaymentListView(APIView):
 
     permission_classes = [IsAdminOrReadOnly]
 
@@ -38,7 +38,7 @@ class Payments(APIView):
             return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
 
 
-class Payment(APIView):
+class PaymentView(APIView):
 
     permission_classes = [IsAdminOrReadOnly]
 
