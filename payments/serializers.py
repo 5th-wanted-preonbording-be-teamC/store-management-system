@@ -74,3 +74,23 @@ class PaymentSuccessSerializer(PaymentUpdateCommonSerializer):
         model = Payment
         fields = ("successed_at",)
 
+
+class PaymentCancelSerializer(PaymentUpdateCommonSerializer):
+    """
+    결제 취소 Serializer
+    """
+    essetial_fields = "canceled_at"
+    compare_fields = "successed_at"
+
+    def additional_validate(validate):
+        def wrapper(self, attrs):
+            if attrs.get("shiped_at", None) is not None:
+                # 배송중인 경우 취소 불가
+                raise serializers.ValidationError("배송이 시작된 상품은 취소할 수 없습니다.")
+            return validate(self, attrs)
+        return wrapper
+
+    class Meta:
+        model = Payment
+        fields = ("canceled_at",)
+
