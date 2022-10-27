@@ -1,8 +1,27 @@
-# 🍏 store-management-system
+# :green_apple: store-management-system
 
-Django, djangoreatframework로 구축한 친환경 농가 Store Service
+Django, djangoreatframework로 구축한 친환경 농가 API 개발
 
-# 📔 프로젝트 요구사항
+## 목차
+
+- [:green_apple: store-management-system](#green_apple-store-management-system)
+  - [목차](#목차)
+  - [:family: 멤버소개](#family-멤버소개)
+  - [:notebook_with_decorative_cover: 프로젝트 요구사항](#notebook_with_decorative_cover-프로젝트-요구사항)
+  - [:computer: ER Diagram](#computer-er-diagram)
+    - [payments](#payments)
+    - [products](#products)
+    - [users](#users)
+
+## :family: 멤버소개
+
+| 이름   | Github                        | Email                 | Blog                        |
+| ------ | ----------------------------- | --------------------- | --------------------------- |
+| 이찬행 | https://github.com/2chanhaeng | 2chanhaeng@gmail.com  | https://chomu.dev/          |
+| 이호진 | https://github.com/HoJin9622  | kiss0104040@gmail.com | https://velog.io/@hojin9622 |
+| 김동현 | https://github.com/xxddongxx  | hyeon2187@gmail.com   | -                           |
+
+## :notebook_with_decorative_cover: 프로젝트 요구사항
 
 - 기존 운영서비스(스토어)의 Backend 개발
 - 기능 구현을 위한 DB 생성 : 회원관리, 상품관리, 결재관리, 주문내역 등
@@ -12,7 +31,7 @@ Django, djangoreatframework로 구축한 친환경 농가 Store Service
 - 유저는 이용자, 관리자로 나누어져 있으며 상품 및 결재, 주문은 관리자만 입력, 수정, 삭제 가능,
   이용자는 회원가입, 결재, 주문을 제외하고 조회 권한만 허용
 
-# 💻 ER Diagram
+## :computer: ER Diagram
 
 ```mermaid
 erDiagram
@@ -52,7 +71,7 @@ USER ||--o{ PAYMENT : buy
 PRODUCT ||--o{ PAYMENT : bought
 ```
 
-## payments
+### payments
 
 - 결제 모델
   - `id`: 프라이머리 키로 사용될 아이디
@@ -69,7 +88,7 @@ PRODUCT ||--o{ PAYMENT : bought
   - `canceled_at`: 결제 취소 시간 (null이면 결제 유지 중)
   - `deliveried_at`: 배송 완료 시간 (null이면 배송 미완료)
 
-## products
+### products
 
 - 제품 모델
   - thumbnail: 썸네일
@@ -85,6 +104,6 @@ PRODUCT ||--o{ PAYMENT : bought
   - delivery_method: 배송방법
   - delivery_price: 배송비
 
-## users
+### users
 
 - 사용자 모델
