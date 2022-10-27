@@ -29,6 +29,7 @@ class RegisterAPIView(APIView):
         serializer = serializers.UserSerializer(users, many=True)
         return Response(serializer.data)
 
+
 class UserDetailAPIView(APIView):
     def get_object(self, pk):
         return get_object_or_404(User, pk=pk)
@@ -60,7 +61,7 @@ class UserDetailAPIView(APIView):
         DELETE /api/v1/users/
         """
         user = self.get_object(pk=pk)
-        deactive = {'is_active':'false'}
+        deactive = {"is_active": "false"}
         serializer = serializers.UserDeleteSerializer(user, data=deactive)
         if serializer.is_valid():
             serializer.save()
