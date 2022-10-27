@@ -1,8 +1,19 @@
-# store-management-system
-원티드 백엔드 프리온보딩 백엔드 5차 1주차 기업과제 Fruttie C팀
+# 🍏 store-management-system
 
+Django, djangoreatframework로 구축한 친환경 농가 Store Service
 
-# 앱
+# 📔 프로젝트 요구사항
+
+- 기존 운영서비스(스토어)의 Backend 개발
+- 기능 구현을 위한 DB 생성 : 회원관리, 상품관리, 결재관리, 주문내역 등
+- DB에 정보 입력, 수정, 조회, 삭제를 위한 REST API 개발
+- 정보 입력, 수정 시 데이터 형식의 유효성을 검사
+- REST API에서 벗어난 Param 또는 요청오류에 대한 응답처리
+- 유저는 이용자, 관리자로 나누어져 있으며 상품 및 결재, 주문은 관리자만 입력, 수정, 삭제 가능,
+  이용자는 회원가입, 결재, 주문을 제외하고 조회 권한만 허용
+
+# 💻 ER Diagram
+
 ```mermaid
 erDiagram
 PAYMENT{
@@ -42,22 +53,24 @@ PRODUCT ||--o{ PAYMENT : bought
 ```
 
 ## payments
+
 - 결제 모델
   - `id`: 프라이머리 키로 사용될 아이디
   - `product`: 상품
   - `user`: 이용자
   - `price`: 상품가격
   - `delivery_fee`: 배송비
-  - `amount`: 최종결제금액 (상품가격 + 배송비) 
+  - `amount`: 최종결제금액 (상품가격 + 배송비)
   - `payment_method`: 결제수단
   - `delivery_address`: 배송지 주소 및 메모
   - `created_at`: 생성 시간
   - `updated_at`: 취소 시간
-  - `successed_at`:  결제 성공 시간 (null이면 결제 실패)
-  - `canceled_at`:  결제 취소 시간 (null이면 결제 유지 중)
-  - `deliveried_at`:  배송 완료 시간 (null이면 배송 미완료)
+  - `successed_at`: 결제 성공 시간 (null이면 결제 실패)
+  - `canceled_at`: 결제 취소 시간 (null이면 결제 유지 중)
+  - `deliveried_at`: 배송 완료 시간 (null이면 배송 미완료)
 
 ## products
+
 - 제품 모델
   - thumbnail: 썸네일
   - name: 상품명
@@ -73,4 +86,5 @@ PRODUCT ||--o{ PAYMENT : bought
   - delivery_price: 배송비
 
 ## users
+
 - 사용자 모델
