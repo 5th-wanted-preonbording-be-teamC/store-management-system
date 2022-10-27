@@ -7,6 +7,37 @@ from .serializers import *
 from products.permissions import IsAdminOrReadOnly
 
 
+
+class Payments(APIView):
+
+    permission_classes = [IsAdminOrReadOnly]
+
+    def get(self, request):
+        """
+        결제 내역 목록
+        GET /api/v1/payments/
+        """
+
+        payments = Payment.objects.all()
+        serializer = PaymentListSerializer(payments, many=True)
+
+        return Response(serializer.data)
+
+    def post(self, request):
+        """
+        결제 내역 생성
+        POST /api/v1/payments/
+        """
+
+        serializer = PaymentSerializer(data=request.data)
+        if serializer.is_valid():
+            payment = serializer.save()
+            serializer = PaymentSerializer(payment)
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
+
+
 class Payment(APIView):
 
     permission_classes = [IsAdminOrReadOnly]
