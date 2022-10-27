@@ -1,3 +1,2 @@
-from django.shortcuts import render
+from .models import Payment
 
-# Create your views here.
