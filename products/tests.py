@@ -22,9 +22,9 @@ class TestProducts(APITestCase):
             delivery_method=Product.ProductDeliveryMethodChoices.PARCEL,
             delivery_price=3000,
         )
-        user = User.objects.create(username="test")
+        user = User.objects.create(user_id="test")
         self.user = user
-        admin = User.objects.create(username="admin", is_staff=True)
+        admin = User.objects.create(user_id="admin", is_staff=True)
         self.admin = admin
 
     def test_all_products(self):
