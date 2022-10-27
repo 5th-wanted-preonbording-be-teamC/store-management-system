@@ -15,7 +15,6 @@ from .serializers import (
 from products.permissions import IsAdminOrReadOnly
 
 
-
 class PaymentListView(APIView):
 
     permission_classes = [IsAdminOrReadOnly]
@@ -75,17 +74,29 @@ class PaymentView(APIView):
         payment = self.get_object(pk)
         match request.data:
             case {"successed_at": successed_at}:
-                serializer = PaymentSuccessSerializer(payment, data=request.data, partial=True)
+                serializer = PaymentSuccessSerializer(
+                    payment, data=request.data, partial=True
+                )
             case {"canceled_at": canceled_at}:
-                serializer = PaymentCancelSerializer(payment, data=request.data, partial=True)
+                serializer = PaymentCancelSerializer(
+                    payment, data=request.data, partial=True
+                )
             case {"shiped_at": shiped_at}:
-                serializer = PaymentShipSerializer(payment, data=request.data, partial=True)
+                serializer = PaymentShipSerializer(
+                    payment, data=request.data, partial=True
+                )
             case {"delivered_at": delivered_at}:
-                serializer = PaymentDeliverySerializer(payment, data=request.data, partial=True)
+                serializer = PaymentDeliverySerializer(
+                    payment, data=request.data, partial=True
+                )
             case {"delivery_adress": delivery_adress}:
-                serializer = PaymentDeliveryAddressSerializer(payment, data=request.data, partial=True)
+                serializer = PaymentDeliveryAddressSerializer(
+                    payment, data=request.data, partial=True
+                )
             case _:
-                return Response({"message": "변경할 수 있는 데이터가 없습니다."}, status=HTTP_400_BAD_REQUEST)
+                return Response(
+                    {"message": "변경할 수 있는 데이터가 없습니다."}, status=HTTP_400_BAD_REQUEST
+                )
 
         if serializer.is_valid():
             payment = serializer.save()
