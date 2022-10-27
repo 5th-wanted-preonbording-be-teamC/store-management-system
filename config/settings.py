@@ -48,6 +48,8 @@ CUSTOM_APPS = [
     "common.apps.CommonConfig",
     "products.apps.ProductsConfig",
     "users.apps.UsersConfig",
+    "orders.apps.OrdersConfig",
+    "payments.apps.PaymentsConfig",
 ]
 
 SYSTEM_APPS = [
