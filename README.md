@@ -88,3 +88,14 @@ PRODUCT ||--o{ PAYMENT : bought
 ## users
 
 - 사용자 모델
+  - id: 프라이머리키로 사용될 아이디
+  - user_id: 로그인 아이디
+  - password: 암호화된 비밀번호
+  - user_name: 사용자 이름
+  - email: email
+  - address: 사용자 주소
+  - date_joined: 회원가입 일
+  - last_login: 마지막 로그인
+  - is_superuser: 모든 권한 활성 여부
+  - is_staff: admin 점속 가능 여부
+  - is_active: 계정 활성 여부
