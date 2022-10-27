@@ -36,3 +36,6 @@ class Product(CommonModel):
         verbose_name="배송방법",
     )
     delivery_price = models.PositiveIntegerField(default=0, verbose_name="배송비")
+
+    def __str__(self):
+        return self.name

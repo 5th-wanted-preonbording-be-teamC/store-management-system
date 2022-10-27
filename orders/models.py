@@ -33,5 +33,9 @@ class Order(CommonModel):
         on_delete=models.SET_NULL,
         related_name="order",
         null=True,
+        blank=True,
         verbose_name="결재",
     )
+
+    def __str__(self):
+        return f"{self.user}의 {self.product} 주문"
