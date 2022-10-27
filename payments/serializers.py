@@ -62,3 +62,15 @@ class PaymentUpdateCommonSerializer(serializers.ModelSerializer):
             return attrs
         raise serializers.ValidationError(f"{self.essetial_fields}가 {self.compare_fields}보다 이전입니다.")
 
+
+class PaymentSuccessSerializer(PaymentUpdateCommonSerializer):
+    """
+    결제 성공 Serializer
+    """
+    essetial_fields = "successed_at"
+    compare_fields = "created_at"
+
+    class Meta:
+        model = Payment
+        fields = ("successed_at",)
+
