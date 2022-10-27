@@ -21,7 +21,8 @@ class UserManager(BaseUserManager):
 
     def create_superuser(self, user_id, password, **extra_fields):
         """
-        관리자 User 생성하는 함수수        """
+        관리자 User 생성하는 함수
+        """
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
         extra_fields.setdefault('is_active', True)

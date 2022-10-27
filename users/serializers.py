@@ -15,9 +15,6 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         user = User.objects.create(**validated_data)
         return user
 
-    def validate(self, attrs):
-        return attrs
-
     class Meta:
         model = User
         fields = ['user_id', 'password', 'user_name']
