@@ -37,3 +37,28 @@ class PaymentListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Payment
         fields = common_fields + list_fields
+
+
+class PaymentUpdateCommonSerializer(serializers.ModelSerializer):
+    """
+    결제내역 Update를 위한 추상적 Serializer
+    """
+    essetial_fields = ""
+    compare_fields = ""
+    def additional_validate(validate):
+        # 취소 등 추가 검사가 필요한 경우, 이곳에서 추가 검사
+        def wrapper(self, attrs):
+            return validate(self, attrs)
+        return wrapper
+    
+    @additional_validate
+    def validate(self, attrs):
+        # 필수 필드 검사
+        if attrs.get(self.essetial_fields, None) is None:
+            raise serializers.ValidationError(f"{self.essetial_fields}가 없습니다.")
+        if attrs.get(self.compare_fields, None) is None:
+            raise serializers.ValidationError(f"{self.compare_fields}가 없습니다.")
+        if attrs.get(self.compare_fields) <= attrs.get(self.essetial_fields):
+            return attrs
+        raise serializers.ValidationError(f"{self.essetial_fields}가 {self.compare_fields}보다 이전입니다.")
+
