@@ -32,8 +32,5 @@ class Payment(CommonModel):
     payment_method = models.ForeignKey(
         Method, on_delete=models.SET_NULL, null=True
     )  # 결제수단
-    delivery_address = models.TextField(null=True, blank=True)  # 배송지 주소 및 메모
     successed_at = models.DateTimeField(null=True)  # 결제 성공 시간 (null이면 결제 실패)
     canceled_at = models.DateTimeField(null=True)  # 결제 취소 시간 (null이면 결제 유지 중)
-    shiped_at = models.DateTimeField(null=True)  # 배송 시작 시간 (null이면 배송 전)
-    deliveried_at = models.DateTimeField(null=True)  # 배송 완료 시간 (null이면 배송 미완료)

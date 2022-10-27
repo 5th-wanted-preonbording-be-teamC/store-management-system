@@ -5,7 +5,7 @@ from users.serializers import UserSerializer
 
 
 class OrderSerializer(serializers.ModelSerializer):
-    product = ProductListSerializer(read_only=True)
+    products = ProductListSerializer(read_only=True, many=True)
     user = UserSerializer(read_only=True)
 
     class Meta:
@@ -14,7 +14,7 @@ class OrderSerializer(serializers.ModelSerializer):
             "id",
             "created_at",
             "status",
-            "product",
+            "products",
             "user",
             "payment",
         )
