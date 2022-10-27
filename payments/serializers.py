@@ -114,3 +114,15 @@ class PaymentShipSerializer(PaymentUpdateCommonSerializer):
         model = Payment
         fields = ("shiped_at",)
 
+
+class PaymentDeliverySerializer(PaymentUpdateCommonSerializer):
+    """
+    배송 시작 Serializer
+    """
+    essetial_fields = "deliveried_at"
+    compare_fields = "shiped_at"
+
+    class Meta:
+        model = Payment
+        fields = ("deliveried_at",)
+
