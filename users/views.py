@@ -3,11 +3,16 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+
 from users import serializers
 from users.models import User
+from users.permissions import IsAuthorOrReadonly, IsUserOrWriteo
 
 
 class RegisterAPIView(APIView):
+
+    permission_classes = [IsUserOrWriteo]
+
     def post(self, request):
         """
         회원 가입
@@ -31,6 +36,9 @@ class RegisterAPIView(APIView):
 
 
 class UserDetailAPIView(APIView):
+
+    permission_classes = [IsAuthorOrReadonly]
+
     def get_object(self, pk):
         return get_object_or_404(User, pk=pk)
 
