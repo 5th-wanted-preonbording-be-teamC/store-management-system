@@ -14,6 +14,7 @@ class OrderSerializer(serializers.ModelSerializer):
             "id",
             "created_at",
             "status",
+            "delivery_address",
             "products",
             "user",
             "payment",

@@ -228,5 +228,23 @@ PRODUCT ||--o{ PAYMENT : bought
       <td>Admin</td>
       <td>결재 내역을 삭제합니다.</td>
     </tr>
+    <tr>
+      <td rowspan=3>Order</td>
+      <td>GET</td>
+      <td rowspan=2>/api/v1/orders/</td>
+      <td>Admin</td>
+      <td>주문 내역을 불러옵니다.</td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td>LoggedIn</td>
+      <td>상품을 주문합니다.</td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td>/api/v1/orders/{id}/</td>
+      <td>LoggedIn</td>
+      <td>주문 상태를 변경합니다.</td>
+    </tr>
   </tbody>
 </table>
