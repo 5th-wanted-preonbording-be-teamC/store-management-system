@@ -2,9 +2,12 @@ from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 
 from users import serializers
+from orders.serializers import OrderSerializer
 from users.models import User
+from orders.models import Order
 
 
 class RegisterAPIView(APIView):
@@ -67,3 +70,19 @@ class UserDetailAPIView(APIView):
             serializer.save()
             return Response(status=status.HTTP_204_NO_CONTENT)
         return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class UserOrdersView(APIView):
+
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        """
+        유저의 주문내역 목록
+        GET /api/v1/users/order/
+        """
+
+        user = request.user
+        orders = Order.objects.filter(user=user)
+        serializer = OrderSerializer(orders, many=True)
+        return Response(serializer.data)
