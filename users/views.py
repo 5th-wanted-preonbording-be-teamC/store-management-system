@@ -1,23 +1,19 @@
-from django.contrib.auth import authenticate
 from django.shortcuts import get_object_or_404
-from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
-from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
+from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 
 from users import serializers
 from users.models import User
-from users.permissions import IsAuthorOrReadonly, IsUserOrWriteo
+from users.permissions import IsAuthorOrReadonly, IsUserOrWrite
 
 
 class RegisterAPIView(APIView):
-    authentication_classes = [
-        TokenAuthentication,
-    ]
-    permission_classes = [IsUserOrWriteo]
+
+    permission_classes = [IsUserOrWrite]
 
     def post(self, request):
         """
@@ -25,10 +21,9 @@ class RegisterAPIView(APIView):
         POST /api/v1/users/
         """
         serializer = serializers.UserRegisterSerializer(data=request.data)
-
         if serializer.is_valid():
-            serializer.create(request.data)
-            return Response(serializer.data.auth, status=status.HTTP_201_CREATED)
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def get(self, request):

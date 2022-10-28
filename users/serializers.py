@@ -8,25 +8,26 @@ from users.models import User
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ("id", "last_login", "email", "user_id")
+        fields = ("id", "username")
 
 
 class UserRegisterSerializer(serializers.ModelSerializer):
-    def create(self, validated_data):
-        validated_data["password"] = make_password(validated_data["password"])
-        user = User.objects.create(**validated_data)
-        token = Token.objects.create(user=user)
-        return user
-
     class Meta:
         model = User
-        fields = ["user_id", "password", "user_name"]
+        fields = ["username", "password"]
+        extra_kwargs = {"password": {"write_only": True}}
+
+    def create(self, validated_data):
+        user = User.objects.create_user(
+            validated_data["username"], None, validated_data["password"]
+        )
+        return user
 
 
 class UserUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ["password", "user_name"]
+        fields = ["password", "username"]
 
 
 class UserDeleteSerializer(serializers.ModelSerializer):
