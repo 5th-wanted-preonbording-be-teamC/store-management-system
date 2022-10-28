@@ -15,7 +15,7 @@ class IsAuthorOrReadonly(BasePermission):
         return obj.user_id == request.user.user_id
 
 
-class IsUserOrWriteo(BasePermission):
+class IsUserOrWrite(BasePermission):
     def has_permission(self, request, view):
         # 읽기는 staff만 허용
         if request.method == "GET":

@@ -1,18 +1,17 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import status
-from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 
 from users import serializers
 from users.models import User
-from users.permissions import IsAuthorOrReadonly, IsUserOrWriteo
+from users.permissions import IsAuthorOrReadonly, IsUserOrWrite
 
 
 class RegisterAPIView(APIView):
 
-    permission_classes = [IsUserOrWriteo]
+    permission_classes = [IsUserOrWrite]
 
     def post(self, request):
         """
@@ -22,7 +21,8 @@ class RegisterAPIView(APIView):
         serializer = serializers.UserRegisterSerializer(data=request.data)
 
         if serializer.is_valid():
-            serializer.create(request.data)
+            user = serializer.save()
+            serializer = serializers.UserSerializer(user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -60,7 +60,8 @@ class UserDetailAPIView(APIView):
         user = self.get_object(pk=pk)
         serializer = serializers.UserUpdateSerializer(user, data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            user = serializer.save()
+            serializer = serializers.UserSerializer(user)
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

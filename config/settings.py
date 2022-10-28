@@ -45,6 +45,12 @@ THIRD_PARTY_APPS = [
     "rest_framework.authtoken",
 ]
 
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.TokenAuthentication",
+    ]
+}
+
 CUSTOM_APPS = [
     "common.apps.CommonConfig",
     "products.apps.ProductsConfig",
