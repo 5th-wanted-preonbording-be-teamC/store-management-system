@@ -16,7 +16,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         validated_data["password"] = make_password(validated_data["password"])
         user = User.objects.create(**validated_data)
         token = Token.objects.create(user=user)
-        return token
+        return user
 
     class Meta:
         model = User

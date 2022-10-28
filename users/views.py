@@ -1,5 +1,8 @@
+from django.contrib.auth import authenticate
 from django.shortcuts import get_object_or_404
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
+from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -11,7 +14,9 @@ from users.permissions import IsAuthorOrReadonly, IsUserOrWriteo
 
 
 class RegisterAPIView(APIView):
-
+    authentication_classes = [
+        TokenAuthentication,
+    ]
     permission_classes = [IsUserOrWriteo]
 
     def post(self, request):
@@ -23,7 +28,7 @@ class RegisterAPIView(APIView):
 
         if serializer.is_valid():
             serializer.create(request.data)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.data.auth, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def get(self, request):
@@ -31,6 +36,9 @@ class RegisterAPIView(APIView):
         회원 목록
         GET /api/v1/users/
         """
+        print("request user >>> ", request.user)
+        print("request auth >>> ", request.auth)
+
         users = User.objects.all()
         serializer = serializers.UserSerializer(users, many=True)
         return Response(serializer.data)
