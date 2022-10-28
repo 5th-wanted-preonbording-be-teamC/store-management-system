@@ -4,4 +4,5 @@ from users import views
 urlpatterns = [
     path("", views.RegisterAPIView.as_view()),
     path("<int:pk>/", views.UserDetailAPIView.as_view()),
+    path("orders/", views.UserOrdersView.as_view()),
 ]
