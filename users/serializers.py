@@ -1,7 +1,4 @@
-from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
-from rest_framework.authtoken.models import Token
-
 from users.models import User
 
 
@@ -27,7 +24,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 class UserUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ["password", "username"]
+        fields = ["password", "email", "last_name"]
 
 
 class UserDeleteSerializer(serializers.ModelSerializer):

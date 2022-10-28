@@ -1,7 +1,5 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import status
-from rest_framework.authtoken.models import Token
-from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -22,7 +20,8 @@ class RegisterAPIView(APIView):
         """
         serializer = serializers.UserRegisterSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            user = serializer.save()
+            serializer = serializers.UserSerializer(user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -31,9 +30,6 @@ class RegisterAPIView(APIView):
         회원 목록
         GET /api/v1/users/
         """
-        print("request user >>> ", request.user)
-        print("request auth >>> ", request.auth)
-
         users = User.objects.all()
         serializer = serializers.UserSerializer(users, many=True)
         return Response(serializer.data)
@@ -63,7 +59,8 @@ class UserDetailAPIView(APIView):
         user = self.get_object(pk=pk)
         serializer = serializers.UserUpdateSerializer(user, data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            user = serializer.save()
+            serializer = serializers.UserSerializer(user)
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
