@@ -2,8 +2,8 @@ from typing import Dict, Any, Optional, Final
 from rest_framework import serializers
 from .models import Payment
 
-AttrsType = Dict[str, Optional[str | Any]]
-common_fields: Final = (
+ATTRS_TYPE = Dict[str, Optional[str | Any]]
+COMMON_FIELDS: Final = (
     "id",
     "product",
     "user",
@@ -25,7 +25,7 @@ class PaymentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model: Final = Payment
-        fields: Final = common_fields
+        fields: Final = COMMON_FIELDS
 
 
 class PaymentUpdateCommonSerializer(serializers.ModelSerializer):
@@ -33,19 +33,19 @@ class PaymentUpdateCommonSerializer(serializers.ModelSerializer):
     결제내역 Update를 위한 추상적 Serializer
     """
 
-    essential_fields: str = ""
-    compare_fields: str = ""
+    ESSENTIAL_FIELDS: str = ""
+    COMPARE_FIELDS: str = ""
 
-    def validate(self, attrs: AttrsType) -> AttrsType:
+    def validate(self, attrs: ATTRS_TYPE) -> ATTRS_TYPE:
         # 필수 필드 검사
-        if attrs.get(self.essential_fields, None) is None:
-            raise serializers.ValidationError(f"{self.essential_fields}가 없습니다.")
-        if attrs.get(self.compare_fields, None) is None:
-            raise serializers.ValidationError(f"{self.compare_fields}가 없습니다.")
-        if attrs.get(self.compare_fields) <= attrs.get(self.essential_fields):
+        if attrs.get(self.ESSENTIAL_FIELDS, None) is None:
+            raise serializers.ValidationError(f"{self.ESSENTIAL_FIELDS}가 없습니다.")
+        if attrs.get(self.COMPARE_FIELDS, None) is None:
+            raise serializers.ValidationError(f"{self.COMPARE_FIELDS}가 없습니다.")
+        if attrs.get(self.COMPARE_FIELDS) <= attrs.get(self.ESSENTIAL_FIELDS):
             return attrs
         raise serializers.ValidationError(
-            f"{self.essential_fields}가 {self.compare_fields}보다 이전입니다."
+            f"{self.ESSENTIAL_FIELDS}가 {self.COMPARE_FIELDS}보다 이전입니다."
         )
 
 
@@ -54,8 +54,8 @@ class PaymentSuccessSerializer(PaymentUpdateCommonSerializer):
     결제 성공 Serializer
     """
 
-    essential_fields: Final = "successed_at"
-    compare_fields: Final = "created_at"
+    ESSENTIAL_FIELDS: Final = "successed_at"
+    COMPARE_FIELDS: Final = "created_at"
 
     class Meta:
         model: Final = Payment
@@ -67,8 +67,8 @@ class PaymentCancelSerializer(PaymentUpdateCommonSerializer):
     결제 취소 Serializer
     """
 
-    essential_fields: Final = "canceled_at"
-    compare_fields: Final = "successed_at"
+    ESSENTIAL_FIELDS: Final = "canceled_at"
+    COMPARE_FIELDS: Final = "successed_at"
 
     class Meta:
         model: Final = Payment
