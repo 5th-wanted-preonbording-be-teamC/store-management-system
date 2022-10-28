@@ -16,7 +16,7 @@ common_fields: Final = (
     "created_at",
     "updated_at",
 )  # 공통 필드
-indivisual_fields: Final = tuple()  # 개별 필드
+individual_fields: Final = tuple()  # 개별 필드
 list_fields: Final = tuple()  # 리스트 필드
 
 
@@ -27,7 +27,7 @@ class PaymentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model: Final = Payment
-        fields: Final = common_fields + indivisual_fields
+        fields: Final = common_fields + individual_fields
 
 
 class PaymentListSerializer(serializers.ModelSerializer):
@@ -46,19 +46,19 @@ class PaymentUpdateCommonSerializer(serializers.ModelSerializer):
     결제내역 Update를 위한 추상적 Serializer
     """
 
-    essetial_fields: str = ""
+    essential_fields: str = ""
     compare_fields: str = ""
 
     def validate(self, attrs: AttrsType) -> AttrsType:
         # 필수 필드 검사
-        if attrs.get(self.essetial_fields, None) is None:
-            raise serializers.ValidationError(f"{self.essetial_fields}가 없습니다.")
+        if attrs.get(self.essential_fields, None) is None:
+            raise serializers.ValidationError(f"{self.essential_fields}가 없습니다.")
         if attrs.get(self.compare_fields, None) is None:
             raise serializers.ValidationError(f"{self.compare_fields}가 없습니다.")
-        if attrs.get(self.compare_fields) <= attrs.get(self.essetial_fields):
+        if attrs.get(self.compare_fields) <= attrs.get(self.essential_fields):
             return attrs
         raise serializers.ValidationError(
-            f"{self.essetial_fields}가 {self.compare_fields}보다 이전입니다."
+            f"{self.essential_fields}가 {self.compare_fields}보다 이전입니다."
         )
 
 
@@ -67,7 +67,7 @@ class PaymentSuccessSerializer(PaymentUpdateCommonSerializer):
     결제 성공 Serializer
     """
 
-    essetial_fields: Final = "successed_at"
+    essential_fields: Final = "successed_at"
     compare_fields: Final = "created_at"
 
     class Meta:
@@ -80,7 +80,7 @@ class PaymentCancelSerializer(PaymentUpdateCommonSerializer):
     결제 취소 Serializer
     """
 
-    essetial_fields: Final = "canceled_at"
+    essential_fields: Final = "canceled_at"
     compare_fields: Final = "successed_at"
 
     class Meta:
