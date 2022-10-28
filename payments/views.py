@@ -6,13 +6,10 @@ from rest_framework.response import Response
 from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_204_NO_CONTENT
 from .models import Payment
 from .serializers import (
-    PaymentListSerializer,
     PaymentSerializer,
+    PaymentListSerializer,
     PaymentSuccessSerializer,
     PaymentCancelSerializer,
-    PaymentShipSerializer,
-    PaymentDeliverySerializer,
-    PaymentDeliveryAddressSerializer,
 )
 from products.permissions import IsAdminOrReadOnly
 
@@ -82,20 +79,6 @@ class PaymentView(APIView):
             case {"canceled_at": canceled_at} if canceled_at is not None:
                 serializer: PaymentCancelSerializer = PaymentCancelSerializer(
                     payment, data=request.data, partial=True
-                )
-            case {"shiped_at": shiped_at} if shiped_at is not None:
-                serializer: PaymentShipSerializer = PaymentShipSerializer(
-                    payment, data=request.data, partial=True
-                )
-            case {"delivered_at": delivered_at} if delivered_at is not None:
-                serializer: PaymentDeliverySerializer = PaymentDeliverySerializer(
-                    payment, data=request.data, partial=True
-                )
-            case {"delivery_adress": delivery_adress} if delivery_adress is not None:
-                serializer: PaymentDeliveryAddressSerializer = (
-                    PaymentDeliveryAddressSerializer(
-                        payment, data=request.data, partial=True
-                    )
                 )
             case _:
                 return Response(

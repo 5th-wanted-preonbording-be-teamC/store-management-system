@@ -1,9 +1,8 @@
-from typing import Literal, Tuple, Dict, Any, Callable, Optional, Final, Type
+from typing import Dict, Any, Optional, Final
 from rest_framework import serializers
 from .models import Payment
 
 AttrsType = Dict[str, Optional[str | Any]]
-ValidateType = Callable[[Any, AttrsType], AttrsType]
 common_fields: Final = (
     "id",
     "product",
@@ -12,11 +11,8 @@ common_fields: Final = (
     "delivery_fee",
     "amount",
     "payment_method",
-    "delivery_address",
     "successed_at",
     "canceled_at",
-    "deliveried_at",
-    "shiped_at",
     "created_at",
     "updated_at",
 )  # 공통 필드
@@ -53,15 +49,6 @@ class PaymentUpdateCommonSerializer(serializers.ModelSerializer):
     essetial_fields: str = ""
     compare_fields: str = ""
 
-    def additional_validate(validate: ValidateType) -> ValidateType:
-        # 취소 등 추가 검사가 필요한 경우, 이곳에서 추가 검사
-        def wrapper(self, attrs: AttrsType) -> AttrsType:
-
-            return validate(self, attrs)
-
-        return wrapper
-
-    @additional_validate
     def validate(self, attrs: AttrsType) -> AttrsType:
         # 필수 필드 검사
         if attrs.get(self.essetial_fields, None) is None:
@@ -96,66 +83,6 @@ class PaymentCancelSerializer(PaymentUpdateCommonSerializer):
     essetial_fields: Final = "canceled_at"
     compare_fields: Final = "successed_at"
 
-    def additional_validate(validate: ValidateType) -> ValidateType:
-        def wrapper(self, attrs: AttrsType) -> AttrsType:
-            if attrs.get("shiped_at", None) is not None:
-                # 배송중인 경우 취소 불가
-                raise serializers.ValidationError("배송이 시작된 상품은 취소할 수 없습니다.")
-            return validate(self, attrs)
-
-        return wrapper
-
     class Meta:
         model: Final = Payment
         fields: Final = ("canceled_at",)
-
-
-class PaymentShipSerializer(PaymentUpdateCommonSerializer):
-    """
-    배송 시작 Serializer
-    """
-
-    essetial_fields: Final = "shiped_at"
-    compare_fields: Final = "successed_at"
-
-    def additional_validate(validate: ValidateType) -> ValidateType:
-        def wrapper(self, attrs: AttrsType) -> AttrsType:
-            if attrs.get("canceled_at", None) is not None:
-                # 이미 취소된 경우 배송 불가
-                raise serializers.ValidationError("이미 취소된 상품은 배송할 수 없습니다.")
-            return validate(self, attrs)
-
-        return wrapper
-
-    class Meta:
-        model: Final = Payment
-        fields: Final = ("shiped_at",)
-
-
-class PaymentDeliverySerializer(PaymentUpdateCommonSerializer):
-    """
-    배송 시작 Serializer
-    """
-
-    essetial_fields: Final = "deliveried_at"
-    compare_fields: Final = "shiped_at"
-
-    class Meta:
-        model: Final = Payment
-        fields: Final = ("deliveried_at",)
-
-
-class PaymentDeliveryAddressSerializer(serializers.ModelSerializer):
-    """
-    배송지 변경 Serializer
-    """
-
-    def validate(self, attrs: AttrsType) -> AttrsType:
-        if attrs.get("shiped_at") is not None:
-            # 배송이 시작된 경우 배송지 변경 불가
-            raise serializers.ValidationError("배송이 시작된 상품은 배송지를 변경할 수 없습니다.")
-        return attrs
-
-    class Meta:
-        model: Final = Payment
-        fields: Final = ("delivery_address",)
