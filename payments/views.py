@@ -7,7 +7,6 @@ from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_204_NO_CONTENT
 from .models import Payment
 from .serializers import (
     PaymentSerializer,
-    PaymentListSerializer,
     PaymentSuccessSerializer,
     PaymentCancelSerializer,
 )
@@ -25,7 +24,7 @@ class PaymentListView(APIView):
         """
 
         payments: Final = Payment.objects.all()
-        serializer: Final = PaymentListSerializer(payments, many=True)
+        serializer: Final = PaymentSerializer(payments, many=True)
 
         return Response(serializer.data)
 

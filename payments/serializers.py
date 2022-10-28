@@ -15,9 +15,7 @@ common_fields: Final = (
     "canceled_at",
     "created_at",
     "updated_at",
-)  # 공통 필드
-individual_fields: Final = tuple()  # 개별 필드
-list_fields: Final = tuple()  # 리스트 필드
+)  # 공통 필드 -> 추후 필요에 따라 분리
 
 
 class PaymentSerializer(serializers.ModelSerializer):
@@ -27,18 +25,7 @@ class PaymentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model: Final = Payment
-        fields: Final = common_fields + individual_fields
-
-
-class PaymentListSerializer(serializers.ModelSerializer):
-    """
-    결제내역 List Serializer
-    결제내역 Serializer와 동일하나, 추후 필요시 변경할 수 있도록 분리
-    """
-
-    class Meta:
-        model: Final = Payment
-        fields: Final = common_fields + list_fields
+        fields: Final = common_fields
 
 
 class PaymentUpdateCommonSerializer(serializers.ModelSerializer):
